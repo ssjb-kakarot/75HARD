@@ -1,21 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Daily Schedule</title>
-</head>
-<body>
-    <h1>Daily Schedule</h1>
-    <p>This page will automatically redirect to today's schedule:</p>
+    <title>Weekly Schedule</title>
+    <style>
+        .schedule {
+            display: none;
+        }
+    </style>
     <script>
-        // Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-        var today = new Date().getDay();
-        var dayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-        
-        // Define the filename for the day
-        var filename = dayNames[today] + ".html";
-        
-        // Redirect to the corresponding schedule file
-        window.location.href = filename;
+        function showCurrentSchedule() {
+            var schedules = document.querySelectorAll('.schedule');
+            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var today = new Date().getDay(); // Get the current day (0 = Sunday, 1 = Monday, and so on)
+            var currentDay = days[today];
+
+            for (var i = 0; i < schedules.length; i++) {
+                schedules[i].style.display = 'none';
+            }
+            document.getElementById(currentDay).style.display = 'block';
+        }
     </script>
+</head>
+<body onload="showCurrentSchedule()">
+    <h1>Weekly Schedule</h1>
+    <button onclick="showSchedule('Sunday')">Sunday</button>
+    <button onclick="showSchedule('Monday')">Monday</button>
+    <button onclick="showSchedule('Tuesday')">Tuesday</button>
+    <button onclick="showSchedule('Wednesday')">Wednesday</button>
+    <button onclick="showSchedule('Thursday')">Thursday</button>
+    <button onclick="showSchedule('Friday')">Friday</button>
+    <button onclick="showSchedule('Saturday')">Saturday</button>
+
+    <div class="schedule" id="Sunday">
+        <!-- Sunday's Schedule HTML here -->
+    </div>
+    <div class="schedule" id="Monday">
+        <!-- Monday's Schedule HTML here -->
+    </div>
+    <div class="schedule" id="Tuesday">
+        <!-- Tuesday's Schedule HTML here -->
+    </div>
+    <div class="schedule" id="Wednesday">
+        <!-- Wednesday's Schedule HTML here -->
+    </div>
+    <div class="schedule" id="Thursday">
+        <!-- Thursday's Schedule HTML here -->
+    </div>
+    <div class "schedule" id="Friday">
+        <!-- Friday's Schedule HTML here -->
+    </div>
+    <div class="schedule" id="Saturday">
+        <!-- Saturday's Schedule HTML here -->
+    </div>
 </body>
 </html>
