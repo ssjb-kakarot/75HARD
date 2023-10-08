@@ -1,53 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Weekly Schedule</title>
-    <style>
-        .schedule {
-            display: none;
-        }
-    </style>
-    <script>
-        var today = new Date().getDay();
-        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-        function loadSchedule(day) {
-            var scheduleDiv = document.getElementById('schedule-div');
-            var scheduleFile = day.toLowerCase() + '.html';
-            
-            fetch(scheduleFile)
-                .then(response => response.text())
-                .then(data => {
-                    scheduleDiv.innerHTML = data;
-                })
-                .catch(error => console.error(error));
-        }
-
-        function toggleTomorrowSchedule() {
-            var tomorrow = (today + 1) % 7; // Calculate the index of the next day, looping back to Sunday
-            var tomorrowDay = days[tomorrow];
-            loadSchedule(tomorrowDay);
-            setTimeout(showTodaySchedule, 10000); // Show today's schedule after 10 seconds
-        }
-
-        function showTodaySchedule() {
-            loadSchedule(days[today]);
-        }
-
-        function promptTomorrowSchedule() {
-            var answer = window.confirm("Do you want to see tomorrow's schedule?");
-            if (answer) {
-                toggleTomorrowSchedule();
-            } else {
-                showTodaySchedule();
-            }
-        }
-
-        window.onload = promptTomorrowSchedule;
-    </script>
+    <title>Daily Schedule</title>
 </head>
 <body>
-    <h1>Weekly Schedule</h1>
-    <div id="schedule-div"></div>
+    <h1>Daily Schedule</h1>
+    <p>This page will automatically redirect to today's schedule:</p>
+    <script>
+        // Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+        var today = new Date().getDay();
+        var dayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+        
+        // Define the filename for the day
+        var filename = dayNames[today] + ".html";
+        
+        // Redirect to the corresponding schedule file
+        window.location.href = filename;
+    </script>
 </body>
 </html>
