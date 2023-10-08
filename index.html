@@ -2,55 +2,48 @@
 <html>
 <head>
     <title>Weekly Schedule</title>
-    <style>
-        .schedule {
-            display: none;
-        }
-    </style>
-    <script>
-        function showCurrentSchedule() {
-            var schedules = document.querySelectorAll('.schedule');
-            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            var today = new Date().getDay(); // Get the current day (0 = Sunday, 1 = Monday, and so on)
-            var currentDay = days[today];
-
-            for (var i = 0; i < schedules.length; i++) {
-                schedules[i].style.display = 'none';
-            }
-            document.getElementById(currentDay).style.display = 'block';
-        }
-    </script>
 </head>
-<body onload="showCurrentSchedule()">
+<body>
     <h1>Weekly Schedule</h1>
-    <button onclick="showSchedule('Sunday')">Sunday</button>
-    <button onclick="showSchedule('Monday')">Monday</button>
-    <button onclick="showSchedule('Tuesday')">Tuesday</button>
-    <button onclick="showSchedule('Wednesday')">Wednesday</button>
-    <button onclick="showSchedule('Thursday')">Thursday</button>
-    <button onclick="showSchedule('Friday')">Friday</button>
-    <button onclick="showSchedule('Saturday')">Saturday</button>
+    <div>
+        <button onclick="showSchedule('previous')">YESTERDAY</button>
+        <button onclick="showSchedule('next')">TOMORROW</button>
+    </div>
+    <div id="schedule"></div>
+    <script>
+        function showSchedule(day) {
+            // Get the current day (0 = Sunday, 1 = Monday, and so on)
+            var today = new Date().getDay();
 
-    <div class="schedule" id="Sunday">
-        <!-- Sunday's Schedule HTML here -->
-    </div>
-    <div class="schedule" id="Monday">
-        <!-- Monday's Schedule HTML here -->
-    </div>
-    <div class="schedule" id="Tuesday">
-        <!-- Tuesday's Schedule HTML here -->
-    </div>
-    <div class="schedule" id="Wednesday">
-        <!-- Wednesday's Schedule HTML here -->
-    </div>
-    <div class="schedule" id="Thursday">
-        <!-- Thursday's Schedule HTML here -->
-    </div>
-    <div class "schedule" id="Friday">
-        <!-- Friday's Schedule HTML here -->
-    </div>
-    <div class="schedule" id="Saturday">
-        <!-- Saturday's Schedule HTML here -->
-    </div>
+            // Define an array of file names for each day
+            var days = ['sunday.html', 'monday.html', 'tuesday.html', 'wednesday.html', 'thursday.html', 'friday.html', 'saturday.html'];
+
+            // Determine the index of the current day
+            var currentIndex = today;
+
+            if (day === 'previous') {
+                currentIndex = (today - 1 + 7) % 7; // Ensure a positive index
+            } else if (day === 'next') {
+                currentIndex = (today + 1) % 7;
+            }
+
+            // Load the schedule for the selected day
+            var currentDay = days[currentIndex];
+            var scheduleDiv = document.getElementById('schedule');
+
+            // Create an iframe to load the schedule HTML
+            var iframe = document.createElement('iframe');
+            iframe.src = currentDay;
+            iframe.style.width = '100%';
+            iframe.style.height = '500px';
+
+            // Clear the scheduleDiv and append the iframe
+            scheduleDiv.innerHTML = '';
+            scheduleDiv.appendChild(iframe);
+        }
+
+        // Automatically load the schedule for today on page load
+        showSchedule('next'); // 'next' because it will load tomorrow's schedule
+    </script>
 </body>
 </html>
