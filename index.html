@@ -11,7 +11,8 @@
             font-size: 24px;
         }
         #schedule {
-            max-width: 100%;
+            width: 100%;
+            height: auto;
         }
     </style>
 </head>
@@ -47,11 +48,16 @@
             var iframe = document.createElement('iframe');
             iframe.src = currentDay;
             iframe.style.width = '100%';
-            iframe.style.height = '500px';
+            iframe.style.height = 'auto'; // Set height to auto
 
             // Clear the scheduleDiv and append the iframe
             scheduleDiv.innerHTML = '';
             scheduleDiv.appendChild(iframe);
+
+            // Set the iframe's height based on its content
+            iframe.onload = function () {
+                iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+            };
         }
 
         // Automatically load the schedule for today on page load
