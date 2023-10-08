@@ -1,21 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Daily Schedule</title>
+    <title>Weekly Schedule</title>
+    <style>
+        .schedule {
+            display: none;
+        }
+    </style>
+    <script>
+        var today = new Date().getDay();
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+        function showSchedule(day) {
+            var schedules = document.querySelectorAll('.schedule');
+            for (var i = 0; i < schedules.length; i++) {
+                schedules[i].style.display = 'none';
+            }
+            document.getElementById(day).style.display = 'block';
+        }
+
+        function showTomorrowSchedule() {
+            var tomorrow = (today + 1) % 7; // Calculate the index of the next day, looping back to Sunday
+            var tomorrowDay = days[tomorrow];
+            showSchedule(tomorrowDay);
+            setTimeout(showTodaySchedule, 10000); // Show today's schedule after 10 seconds
+        }
+
+        function showTodaySchedule() {
+            showSchedule(days[today]);
+        }
+
+        function promptTomorrowSchedule() {
+            var answer = window.confirm("Do you want to see tomorrow's schedule?");
+            if (answer) {
+                showTomorrowSchedule();
+            } else {
+                showTodaySchedule();
+            }
+        }
+
+        window.onload = promptTomorrowSchedule;
+    </script>
 </head>
 <body>
-    <h1>Daily Schedule</h1>
-    <p>This page will automatically redirect to today's schedule:</p>
-    <script>
-        // Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-        var today = new Date().getDay();
-        var dayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-        
-        // Define the filename for the day
-        var filename = dayNames[today] + ".html";
-        
-        // Redirect to the corresponding schedule file
-        window.location.href = filename;
-    </script>
+    <h1>Weekly Schedule</h1>
+    <div class="schedule" id="Sunday">
+        <!-- Sunday's Schedule HTML here -->
+    </div>
+    <div class="schedule" id="Monday">
+        <!-- Monday's Schedule HTML here -->
+    </div>
+    <div class="schedule" id="Tuesday">
+        <!-- Tuesday's Schedule HTML here -->
+    </div>
+    <div class="schedule" id="Wednesday">
+        <!-- Wednesday's Schedule HTML here -->
+    </div>
+    <div class="schedule" id="Thursday">
+        <!-- Thursday's Schedule HTML here -->
+    </div>
+    <div class="schedule" id="Friday">
+        <!-- Friday's Schedule HTML here -->
+    </div>
+    <div class="schedule" id="Saturday">
+        <!-- Saturday's Schedule HTML here -->
+    </div>
 </body>
 </html>
